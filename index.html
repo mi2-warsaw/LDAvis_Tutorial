@@ -129,7 +129,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 
 <section><section id="motivation" class="titleslide slide level1"><h1>Motivation</h1></section><section id="motivation-1" class="slide level2">
 <h1>Motivation</h1>
-<p><small></p>
+<small>
 <ul>
 <li>Text mining is a new challenge for machine wandering practitioners.</li>
 <li>The increased interest in the text mining is caused by an augmentation of internet users and by rapid growth of the internet data which is said that <em>in 80% is a text data</em>.</li>
@@ -141,7 +141,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <section><section id="lda-overview" class="titleslide slide level1"><h1>LDA overview</h1></section><section id="lda-overview-1" class="slide level2">
 <h1>LDA overview</h1>
 <p>From <a href="https://en.wikipedia.org/wiki/Latent_Dirichlet_allocation">Wikipedia</a></p>
-<p><small></p>
+<small>
 <blockquote>
 <p>In natural language processing, latent Dirichlet allocation (LDA) is a generative statistical model that allows sets of observations to be explained by unobserved groups that explain why some parts of the data are similar. For example, if observations are words collected into documents, it posits that each document is a mixture of a small number of topics and that each word’s creation is attributable to one of the document’s topics.</p>
 </blockquote>
@@ -149,7 +149,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 </section></section>
 <section><section id="data" class="titleslide slide level1"><h1>Data</h1></section><section id="show-case-on-r-bloggers" class="slide level2">
 <h1>Show Case on R-Bloggers</h1>
-<p><small></p>
+<small>
 <p>For this presentation I have used articles from <a href="http://r-bloggers.com/">R-Bloggers</a>.</p>
 <p>They can be downloaded from <a href="https://github.com/MarcinKosinski/r-bloggers-harvesting">this repository</a>.</p>
 <p>The data harvesting process is explained in this post: <a href="http://r-addict.com/2016/06/21/LDAvis-RBloggers.html">LDAvis Show Case on R-Bloggers</a></p>
@@ -165,7 +165,7 @@ posts &lt;-<span class="st"> </span><span class="kw">dbGetQuery</span>(db.conn,
 <p></small></p>
 </section><section id="data-preparation-1" class="slide level2">
 <h1>Data preparation 1</h1>
-<p><small></p>
+<small>
 <p>Normally I would use <code>LDA()</code> function from <a href="https://cran.r-project.org/web/packages/topicmodels/topicmodels.pdf">topicmodels</a> package to fit LDA model because the input can be of class <code>DocumentTermMatrix</code> which is an object from <a href="https://cran.r-project.org/web/packages/tm/vignettes/tm.pdf">tm</a> package.</p>
 <p><code>DocumentTermMatrix</code> object is very convinient for working with text data (<a href="http://www.rexamine.com/2014/06/text-mining-in-r-automatic-categorization-of-wikipedia-articles/">check this Norbert Ryciak’s post</a>) because there exists <code>tm_map</code> function which can be applied to all documents for stop words removal, lowering capital letters and removal of words that did not occur in x % of documents.</p>
 <p>I haven’t seen <code>LDAvis</code> examples for models generated with topicsmodel package so we will use traditional approach to text processing.</p>
@@ -184,7 +184,7 @@ vocab &lt;-<span class="st"> </span><span class="kw">names</span>(term.table)</c
 <p></small></p>
 </section><section id="data-preparation-2" class="slide level2">
 <h1>Data preparation 2</h1>
-<p><small></p>
+<small>
 <p>The <code>lda.collapsed.gibbs.sampler()</code> function from <code>lda</code> package has uncomfortable input format (regarding to <code>LDA()</code> from <code>topicmodels</code> package) so I basically used <a href="https://github.com/cpsievert">cpsievert</a> snippets</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># now put the documents into the format required by the lda package:</span>
 get.terms &lt;-<span class="st"> </span>function(x) {
@@ -207,7 +207,7 @@ term.frequency &lt;-<span class="st"> </span><span class="kw">as.integer</span>(
 </section></section>
 <section><section id="fitting-the-model" class="titleslide slide level1"><h1>Fitting the Model</h1></section><section id="fitting-the-model-1" class="slide level2">
 <h1>Fitting the Model</h1>
-<p><small></p>
+<small>
 <p>From <code>lda</code> package documentation</p>
 <blockquote>
 <p>… [this function] takes sparsely represented input documents, perform inference, and return point estimates of the latent parameters using the state at the last iteration of Gibbs sampling.</p>
@@ -231,7 +231,7 @@ fit &lt;-<span class="st"> </span><span class="kw">lda.collapsed.gibbs.sampler</
 <p></small></p>
 </section><section id="getting-the-model" class="slide level2">
 <h1>Getting the Model</h1>
-<p><small></p>
+<small>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(archivist)
 <span class="kw">saveToRepo</span>(fit,  <span class="dt">repoDir =</span> <span class="st">&quot;../Museum&quot;</span>)</code></pre></div>
 <p>The computations took very long, so in case you would like to get model faster, I have archived my model on GitHub with the help of <a href="http://r-bloggers.com/r-hero-saves-backup-city-with-archivist-and-github/">archivist</a> package. You can easily load this model to R with</p>
@@ -240,7 +240,7 @@ fit &lt;-<span class="st"> </span><span class="kw">lda.collapsed.gibbs.sampler</
 </section></section>
 <section><section id="ldavis-use-case" class="titleslide slide level1"><h1>LDAvis use case</h1></section><section id="ldavis-use-case-1" class="slide level2">
 <h1>LDAvis use case</h1>
-<p><small></p>
+<small>
 <p>If you google out properly you’ll wind out that LDAvis description is</p>
 <blockquote>
 <p>Tools to create an interactive web-based visualization of a topic model that has been fit to a corpus of text data using Latent Dirichlet Allocation (LDA). Given the estimated parameters of the topic model, it computes various summary statistics as input to an interactive visualization built with D3.js that is accessed via a browser. The goal is to help users interpret the topics in their LDA topic model.</p>
@@ -249,7 +249,7 @@ fit &lt;-<span class="st"> </span><span class="kw">lda.collapsed.gibbs.sampler</
 <p></small></p>
 </section><section id="ldavis-preparations" class="slide level2">
 <h1>LDAvis Preparations</h1>
-<p><small></p>
+<small>
 <p>To visualize the result using LDAvis, we’ll need estimates of the document-topic distributions, which we denote by the DxK matrix theta, and the set of topic-term distributions, which we denote by the K×W matrix phi.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">theta &lt;-<span class="st"> </span><span class="kw">t</span>(<span class="kw">apply</span>(fit$document_sums +<span class="st"> </span>alpha,
                  <span class="dv">2</span>,
@@ -271,7 +271,7 @@ json &lt;-<span class="st"> </span><span class="kw">createJSON</span>(
 <p></small></p>
 </section><section id="result" class="slide level2">
 <h1>Result</h1>
-<p><small></p>
+<small>
 <p>The result is published under this link</p>
 <p><a href="http://r-addict.com/r-bloggers-harvesting/" class="uri">http://r-addict.com/r-bloggers-harvesting/</a></p>
 <p>where you can check Intertopic Distance Map (via multidimensional scaling) and top N relevant terms for a topic.</p>
