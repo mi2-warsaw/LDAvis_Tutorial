@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="generator" content="pandoc">
+  <meta name="author" content="" />
+  <title>  Wprowadzenie do modelu   ukrytej alokacji Dirichleta     (na podstawie Topic Models, David Blei)</title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <link rel="stylesheet" href="index_files/reveal.js-3.3.0/css/reveal.css"/>
+
+
+
+<link rel="stylesheet" href="index_files/reveal.js-3.3.0/css/theme/white.css" id="theme">
+
+
+  <!-- some tweaks to reveal css -->
+  <style type="text/css">
+    .reveal h1 { font-size: 2.0em; }
+    .reveal h2 { font-size: 1.5em;  }
+    .reveal h3 { font-size: 1.25em;	}
+    .reveal h4 { font-size: 1em;	}
+
+    .reveal .slides>section,
+    .reveal .slides>section>section {
+      padding: 0px 0px;
+    }
+
+
+
+    .reveal table {
+      border-width: 1px;
+      border-spacing: 2px;
+      border-style: dotted;
+      border-color: gray;
+      border-collapse: collapse;
+      font-size: 0.7em;
+    }
+
+    .reveal table th {
+      border-width: 1px;
+      padding-left: 10px;
+      padding-right: 25px;
+      font-weight: bold;
+      border-style: dotted;
+      border-color: gray;
+    }
+
+    .reveal table td {
+      border-width: 1px;
+      padding-left: 10px;
+      padding-right: 25px;
+      border-style: dotted;
+      border-color: gray;
+    }
+
+  </style>
+
+    <style type="text/css">code{white-space: pre;}</style>
+
+    <link rel="stylesheet" href="github_fork.css"/>
+    <!-- Printing and PDF exports -->
+    <script>
+      var link = document.createElement( 'link' );
+      link.rel = 'stylesheet';
+      link.type = 'text/css';
+      link.href = window.location.search.match( /print-pdf/gi ) ? 'index_files/reveal.js-3.3.0/css/print/pdf.css' : 'index_files/reveal.js-3.3.0/css/print/paper.css';
+      document.getElementsByTagName( 'head' )[0].appendChild( link );
+    </script>
+    <!--[if lt IE 9]>
+    <script src="index_files/reveal.js-3.3.0/lib/js/html5shiv.js"></script>
+    <![endif]-->
+
+    <link href="index_files/font-awesome-4.5.0/css/font-awesome.min.css" rel="stylesheet" />
+</head>
+<body>
+  <div class="reveal">
+    <div class="slides">
+
+<section data-background-image="imgs/bg-small.png">
+    <h1 class="title"><br><small> Wprowadzenie do modelu <br> ukrytej alokacji Dirichleta <br> <br> (na podstawie <a href="http://videolectures.net/mlss09uk_blei_tm/">Topic Models, David Blei</a>) </small></h1>
+  <h1 class="subtitle"><small> <br><a href="http://r-addict.com/About.html">Marcin Kosiński</a> </small></h1>
+    <h2 class="author"><small><a href='https://r-addict.com'><i class='fa fa-comment'></i></a>  <a href='https://stackoverflow.com/users/3857701'><i class='fa fa-stack-overflow'></i></a>  <a href='https://github.com/MarcinKosinski'><i class='fa fa-github'></i></a>  <a href='mailto:m.p.kosinski@gmail.com'><i class='fa fa-envelope-o'></i></a></small><br></h2>
+    <h3 class="date">7 Listopada 2016</h3>
+</section>
+
+<section><section id="latent-dirichlet-allocation" class="titleslide slide level1"><h1>Latent Dirichlet Allocation</h1></section><section id="intuicja-lda" class="slide level2">
+<h1>Intuicja LDA</h1>
+<p><img src="img/img1.png"  style="width:675px;height:450px;"></p>
+</section><section id="model-generujacy" class="slide level2">
+<h1>Model generujący</h1>
+<p><img src="img/img2.png"  style="width:675px;height:450px;"></p>
+</section><section id="najbardziej-prawdopodobne-sowa" class="slide level2">
+<h1>Najbardziej prawdopodobne słowa</h1>
+<p><img src="img/img7.png"  style="width:675px;height:450px;"></p>
+</section><section id="rozkad-a-posteriori" class="slide level2">
+<h1>Rozkład <em>a posteriori</em></h1>
+<p><img src="img/img3.png"  style="width:675px;height:450px;"></p>
+</section><section id="model-graficzny" class="slide level2">
+<h1>Model graficzny</h1>
+<p><img src="img/img4.png"  style="width:450px;height:300px;"></p>
+<ul>
+<li>Wierzhołki to zmienne losowe.</li>
+<li>Krawędzie wskazują na możliwe zależności.</li>
+<li>Obserwowane zmienne są poszarzone.</li>
+<li>Płytki oznaczają powtórzenia w strukturze.</li>
+</ul>
+</section><section id="model-ukrytej-alokacji-dirichleta" class="slide level2">
+<h1>Model ukrytej alokacji Dirichleta</h1>
+<p><img src="img/img5.png"  style="width:675px;height:450px;"></p>
+</section><section id="model-ukrytej-alokacji-dirichleta-1" class="slide level2">
+<h1>Model ukrytej alokacji Dirichleta</h1>
+<p><img src="img/img6.png"  style="width:675px;height:175px;"></p>
+<p><small> Cel - z kolekcji dokumentów wywnioskuj:</p>
+<ul>
+<li>Przynależność słowa do danego tematu <span class="math inline">\(z_{d,n}\)</span></li>
+<li>Proporcje tematów w danym dokumencie <span class="math inline">\(\theta_{d}\)</span></li>
+<li>Rozkłady tematów w całym korpusie <span class="math inline">\(\beta_{k}\)</span><br />
+</li>
+</ul>
+<p></small></p>
+</section><section id="model-ukrytej-alokacji-dirichleta-2" class="slide level2">
+<h1>Model ukrytej alokacji Dirichleta</h1>
+<p><img src="img/img6.png"  style="width:675px;height:175px;"></p>
+<p><small> Algorytmy używane do wyznaczenia rozkładu a posteriori</p>
+<ul>
+<li>Mean field variational methods (Blei et al., 2001, 2003)</li>
+<li>Expectation propagation (Minka and Lafferty, 2002)</li>
+<li>Collapsed Gibbs sampling (Griffiths and Steyvers, 2002)</li>
+<li>Collapsed variational inference (Teh et al., 2006)</li>
+</ul>
+<p></small></p>
+</section></section>
+<section><section id="rozkad-a-posteriori-1" class="titleslide slide level1"><h1>Rozkład a posteriori</h1></section><section id="rozkad-a-posteriori-w-lda" class="slide level2">
+<h1>Rozkład a posteriori w LDA</h1>
+<p><img src="img/img6.png"  style="width:675px;height:175px;"></p>
+<p>Dla ustalonych <span class="math inline">\(\beta_{1:K}\)</span> rozkład a posteriori dla dokumentu to</p>
+<p><span class="math display">\[\frac{P(\theta|\alpha)\prod_{n=1}^{N}P(z_N|\theta)P(w_N|z_N,\beta_{1:K})}{\int_{\theta}P(\theta|\alpha)\prod_{n=1}^{N}\sum_{z=1}^{K}P(z_N|\theta)P(w_N|z_N,\beta_{1:K})}\]</span></p>
+</section></section>
+<section><section id="bibliografia-i-zroda" class="titleslide slide level1"><h1>Bibliografia i źródła</h1></section><section id="bibliografia-i-zroda-1" class="slide level2">
+<h1>Bibliografia i źródła</h1>
+<ul>
+<li><a href="http://www.jmlr.org/papers/volume3/blei03a/blei03a.pdf">Latent Dirichlet Allocation, Blei et al.</a></li>
+<li><a href="http://videolectures.net/mlss09uk_blei_tm/">Topic Models, David Blei</a></li>
+</ul>
+</section></section>
+    </div>
+  </div>
+
+  <script src="index_files/reveal.js-3.3.0/lib/js/head.min.js"></script>
+  <script src="index_files/reveal.js-3.3.0/js/reveal.js"></script>
+
+  <script>
+
+      // Full list of configuration options available at:
+      // https://github.com/hakimel/reveal.js#configuration
+      Reveal.initialize({
+        // Display the page number of the current slide
+        slideNumber: true,
+        // Push each slide change to the browser history
+        history: true,
+        // Vertical centering of slides
+        center: true,
+        // Transition style
+        transition: 'default', // none/fade/slide/convex/concave/zoom
+        // Transition style for full page slide backgrounds
+        backgroundTransition: 'default', // none/fade/slide/convex/concave/zoom
+
+        // Optional reveal.js plugins
+        dependencies: [
+        ]
+      });
+    </script>
+  <!-- dynamically load mathjax for compatibility with self-contained -->
+  <script>
+    (function () {
+      var script = document.createElement("script");
+      script.type = "text/javascript";
+      script.src  = "https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+      document.getElementsByTagName("head")[0].appendChild(script);
+    })();
+  </script>
+
+<script>
+  (function() {
+    if (window.jQuery) {
+      Reveal.addEventListener( 'slidechanged', function(event) {  
+        window.jQuery(event.previousSlide).trigger('hidden');
+        window.jQuery(event.currentSlide).trigger('shown');
+      });
+    }
+  })();
+</script>
+
+
+  </body>
+</html>

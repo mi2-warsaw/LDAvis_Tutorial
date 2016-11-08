@@ -1,0 +1,112 @@
+---
+title: "<br><small> Wprowadzenie do modelu <br> ukrytej alokacji Dirichleta <br> <br> (na podstawie [Topic Models, David Blei](http://videolectures.net/mlss09uk_blei_tm/)) </small>"
+subtitle: "<small> <br>[Marcin Kosiński](http://r-addict.com/About.html) </small>"
+author: "<small><a href='https://r-addict.com'><i class='fa fa-comment'></i></a>&nbsp;&nbsp;<a href='https://stackoverflow.com/users/3857701'><i class='fa fa-stack-overflow'></i></a>&nbsp;&nbsp;<a href='https://github.com/MarcinKosinski'><i class='fa fa-github'></i></a>&nbsp;&nbsp;<a href='mailto:m.p.kosinski@gmail.com'><i class='fa fa-envelope-o'></i></a></small><br>"
+date: 7 Listopada 2016
+output:
+  revealjs::revealjs_presentation:
+    css: github_fork.css
+    theme: white
+    highlight: pygments
+    self_contained: false
+    center: true
+    reveal_options:
+      slideNumber: true
+---
+
+
+
+```{r, include=FALSE}
+# edit main page with file.edit(system.file("rmarkdown/templates/revealjs_presentation/resources/default.html",package="revealjs"))
+# line 126
+htmltools::tagList(rmarkdown::html_dependency_font_awesome())
+library(knitr)
+opts_chunk$set(
+	comment = "",
+	fig.width = 12, 
+	message = FALSE,
+	warning = FALSE,
+	tidy.opts = list(
+		keep.blank.line = TRUE,	
+		width.cutoff = 150
+		),
+	options(width = 80),
+	eval = TRUE
+)
+```
+
+# Latent Dirichlet Allocation
+
+## Intuicja LDA
+
+<img src="img/img1.png"  style="width:675px;height:450px;">
+
+## Model generujący
+
+<img src="img/img2.png"  style="width:675px;height:450px;">
+
+## Najbardziej prawdopodobne słowa
+
+<img src="img/img7.png"  style="width:675px;height:450px;">
+
+## Rozkład *a posteriori*
+
+<img src="img/img3.png"  style="width:675px;height:450px;">
+
+## Model graficzny
+
+<img src="img/img4.png"  style="width:450px;height:300px;">
+
+- Wierzhołki to zmienne losowe.
+- Krawędzie wskazują na możliwe zależności.
+- Obserwowane zmienne są poszarzone.
+- Płytki oznaczają powtórzenia w strukturze.
+
+## Model ukrytej alokacji Dirichleta
+
+<img src="img/img5.png"  style="width:675px;height:450px;">
+
+## Model ukrytej alokacji Dirichleta
+
+<img src="img/img6.png"  style="width:675px;height:175px;">
+
+<small> 
+Cel - z kolekcji dokumentów wywnioskuj:
+
+- Przynależność słowa do danego tematu $z_{d,n}$
+- Proporcje tematów w danym dokumencie $\theta_{d}$
+- Rozkłady tematów w całym korpusie $\beta_{k}$\
+
+</small>
+
+## Model ukrytej alokacji Dirichleta
+
+<img src="img/img6.png"  style="width:675px;height:175px;">
+
+<small>
+Algorytmy używane do wyznaczenia rozkładu a posteriori
+
+- Mean field variational methods (Blei et al., 2001, 2003)
+- Expectation propagation (Minka and Lafferty, 2002)
+- Collapsed Gibbs sampling (Griffiths and Steyvers, 2002)
+- Collapsed variational inference (Teh et al., 2006)
+
+</small>
+
+# Rozkład a posteriori
+
+## Rozkład a posteriori w LDA
+
+<img src="img/img6.png"  style="width:675px;height:175px;">
+
+Dla ustalonych $\beta_{1:K}$ rozkład a posteriori dla dokumentu to
+
+$$\frac{P(\theta|\alpha)\prod_{n=1}^{N}P(z_N|\theta)P(w_N|z_N,\beta_{1:K})}{\int_{\theta}P(\theta|\alpha)\prod_{n=1}^{N}\sum_{z=1}^{K}P(z_N|\theta)P(w_N|z_N,\beta_{1:K})}$$
+
+
+# Bibliografia i źródła
+
+## Bibliografia i źródła
+
+- [Latent Dirichlet Allocation, Blei et al.](http://www.jmlr.org/papers/volume3/blei03a/blei03a.pdf)
+- [Topic Models, David Blei](http://videolectures.net/mlss09uk_blei_tm/)
